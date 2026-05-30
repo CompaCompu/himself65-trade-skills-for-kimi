@@ -1,0 +1,19 @@
+{
+  "name": "trade",
+  "version": "1.7.0",
+  "description": "Options trading knowledge — pitfalls, case studies, structure-to-regime matching.",
+  "author": {
+    "name": "himself65"
+  },
+  "homepage": "https://github.com/himself65/trade-skills",
+  "license": "MIT",
+  "keywords": [
+    "trading",
+    "options",
+    "earnings",
+    "finance",
+    "pitfalls",
+    "case-study"
+  ],
+  "skills": "./plugins/trade/skills/"
+}
