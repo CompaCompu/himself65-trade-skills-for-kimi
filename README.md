@@ -10,10 +10,12 @@ A personal Claude Code plugin marketplace housing one options-trading skill — 
 ### Kimi Code — Install the plugin
 
 ```bash
-/plugins install https://github.com/CompaCompu/himself65-trade-skills-for-kimi
+/plugins install https://github.com/CompaCompu/himself65-trade-skills-for-kimi/archive/refs/tags/v1.7.1-kimi.zip
 ```
 
 Then start a new session (`/new`) to load the skill.
+
+> **Why the `.zip` URL?** Kimi Code's GitHub repo install path has bugs with release tag resolution (`refs/tags/` → 400) and branch fallback (`zip/HEAD` → truncated). The archive zip URL bypasses all GitHub-specific logic and is treated as a plain zip download — the stable, documented install path.
 
 ### Claude Code — Install the plugin
 
