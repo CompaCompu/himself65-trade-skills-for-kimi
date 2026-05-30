@@ -7,6 +7,14 @@ A personal Claude Code plugin marketplace housing one options-trading skill — 
 
 ## Quick Start
 
+### Kimi Code — Install the plugin
+
+```bash
+/plugins install https://github.com/CompaCompu/himself65-trade-skills-for-kimi
+```
+
+Then start a new session (`/new`) to load the skill.
+
 ### Claude Code — Install the plugin
 
 ```bash
