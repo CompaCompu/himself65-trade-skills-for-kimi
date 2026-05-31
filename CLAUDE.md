@@ -63,7 +63,7 @@ Step-by-step instructions, structure-to-regime quick reference, and the lazy-loa
 ## Plugin system
 
 - `.claude-plugin/marketplace.json` — marketplace listing.
-- `plugins/trade/plugin.json` — plugin manifest (name, version, keywords). Skills under `plugins/trade/skills/` with SKILL.md frontmatter are auto-discovered.
+- `plugins/himself65-trade/plugin.json` — plugin manifest (name, version, keywords). Skills under `plugins/himself65-trade/skills/` with SKILL.md frontmatter are auto-discovered.
 
 Users install via:
 
