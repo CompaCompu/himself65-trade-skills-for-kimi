@@ -1,5 +1,5 @@
 ---
-name: trade
+name: himself65-trade
 description: >
   Personal options trading knowledge base — primarily US-equity, with
   cross-market support via kimi-datasource (Yahoo Finance) for Korea,

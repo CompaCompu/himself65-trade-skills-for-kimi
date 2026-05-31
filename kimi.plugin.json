@@ -1,5 +1,5 @@
 {
-  "name": "trade",
+  "name": "himself65-trade",
   "version": "1.7.0",
   "description": "Options trading knowledge — pitfalls, case studies, structure-to-regime matching.",
   "author": {
@@ -15,5 +15,5 @@
     "pitfalls",
     "case-study"
   ],
-  "skills": "./plugins/trade/skills/"
+  "skills": "./plugins/himself65-trade/skills/"
 }

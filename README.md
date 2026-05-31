@@ -1,9 +1,9 @@
-# Trade
+# himself65-trade
 
 > [!WARNING]
 > This project is for educational and informational purposes only. Nothing here constitutes financial advice. Always do your own research and consult a qualified financial advisor before making investment decisions.
 
-A personal Claude Code plugin marketplace housing one options-trading skill — backed by a curated library of 15 pitfalls and prior case studies (INTC, Mag-7, APP). Layout follows the [`himself65/finance-skills`](https://github.com/himself65/finance-skills) convention.
+A personal Claude Code plugin marketplace housing one options-trading skill (`himself65-trade`) — backed by a curated library of 24 pitfalls and prior case studies (INTC, Mag-7, APP, NOK, TSEM, CBRS, SNOW). Layout follows the [`himself65/finance-skills`](https://github.com/himself65/finance-skills) convention.
 
 ## Quick Start
 
@@ -44,13 +44,13 @@ ln -s ~/trade-skills/plugins/trade/skills/trade ~/.claude/skills/trade
 
 ## Available Skills
 
-### Trade (`trade`)
+### himself65-trade (`himself65-trade`)
 
 Multi-leg options trading assistant with concrete strikes, IV-aware structures, and probability-weighted scenarios.
 
 | Skill | Description |
 |---|---|
-| [trade](plugins/trade/skills/trade/) | Options trading knowledge base — 15 pitfalls + INTC / Mag-7 / APP case studies + structure-to-regime framework. Lazy-loaded. |
+| [himself65-trade](plugins/himself65-trade/skills/himself65-trade/) | Options trading knowledge base — 24 pitfalls + INTC / Mag-7 / APP / NOK / TSEM / CBRS / SNOW case studies + structure-to-regime framework. Lazy-loaded. |
 
 ## License
 

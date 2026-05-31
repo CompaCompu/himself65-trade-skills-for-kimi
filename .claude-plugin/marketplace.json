@@ -1,5 +1,5 @@
 {
-  "name": "trade",
+  "name": "himself65-trade",
   "owner": {
     "name": "himself65"
   },
@@ -9,8 +9,8 @@
   },
   "plugins": [
     {
-      "name": "trade",
-      "source": "./plugins/trade",
+      "name": "himself65-trade",
+      "source": "./plugins/himself65-trade",
       "description": "Options trading knowledge — pitfalls, case studies, structure-to-regime matching.",
       "version": "1.7.0"
     }

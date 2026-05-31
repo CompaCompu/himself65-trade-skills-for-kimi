@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-Personal options trading Claude Code plugin marketplace. Contains one plugin (`trade`) wrapping one skill (`trade`) — a multi-leg options trading assistant backed by a curated pitfalls library and case-study archive.
+Personal options trading Claude Code plugin marketplace. Contains one plugin (`himself65-trade`) wrapping one skill (`himself65-trade`) — a multi-leg options trading assistant backed by a curated pitfalls library and case-study archive.
 
 ## Repository structure
 
@@ -12,17 +12,17 @@ This repo is a Claude Code plugin marketplace. Skills are organized under `plugi
 
 ```
 .claude-plugin/
-  marketplace.json        # Marketplace listing — registers the trade plugin
+  marketplace.json        # Marketplace listing — registers the himself65-trade plugin
 plugins/
-  trade/
+  himself65-trade/
     plugin.json           # Plugin manifest
     skills/
-      trade/
+      himself65-trade/
         SKILL.md          # Skill entry point with frontmatter
         README.md         # Skill documentation
         references/       # Lazy-loaded reference content
           strategies.md
-          pitfalls/       # 15 trading pitfalls (one file per rule)
+          pitfalls/       # 24 trading pitfalls (one file per rule)
           ticker/         # Closed trade case studies (INTC, Mag-7, APP)
 ```
 
@@ -34,7 +34,7 @@ plugins/
 
 ```markdown
 ---
-name: trade
+name: himself65-trade
 description: >
   Multi-line description that doubles as the trigger definition.
   Include specific phrases, keywords, and scenarios that should activate this skill.
@@ -47,7 +47,7 @@ Step-by-step instructions, structure-to-regime quick reference, and the lazy-loa
 ## Reference Files
 
 - `references/strategies.md` — always-relevant framework
-- `references/pitfalls/README.md` — index of 15 pitfalls
+- `references/pitfalls/README.md` — index of 24 pitfalls
 - `references/ticker/README.md` — index of case studies
 ```
 
@@ -55,8 +55,8 @@ Step-by-step instructions, structure-to-regime quick reference, and the lazy-loa
 
 ## Adding to the knowledge base
 
-- **New pitfall**: copy `plugins/trade/skills/trade/references/pitfalls/_template.md` → `pitfalls/NN-slug.md`, then add a row to `pitfalls/README.md`
-- **New case study**: copy `plugins/trade/skills/trade/references/ticker/_template.md` → `ticker/<ticker>-YYYY-MM.md`, then add a row to `ticker/README.md`
+- **New pitfall**: copy `plugins/himself65-trade/skills/himself65-trade/references/pitfalls/_template.md` → `pitfalls/NN-slug.md`, then add a row to `pitfalls/README.md`
+- **New case study**: copy `plugins/himself65-trade/skills/himself65-trade/references/ticker/_template.md` → `ticker/<ticker>-YYYY-MM.md`, then add a row to `ticker/README.md`
 - **Strategy update**: edit `references/strategies.md` directly — flat by design
 - **Skill description tweak**: edit the YAML `description` field in `SKILL.md` frontmatter (controls what triggers the skill)
 
@@ -71,7 +71,7 @@ Users install via:
 npx plugins add himself65/trade-skills
 ```
 
-When a skill is invoked as a plugin, it is namespaced as `<plugin-name>:<skill-name>` (e.g., `/trade:trade`).
+When a skill is invoked as a plugin, it is namespaced as `<plugin-name>:<skill-name>` (e.g., `/himself65-trade:himself65-trade`).
 
 ## Important constraints
 
