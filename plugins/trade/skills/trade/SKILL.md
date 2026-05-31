@@ -1,7 +1,9 @@
 ---
 name: trade
 description: >
-  Personal US-equity options trading knowledge base. Use for trade analysis,
+  Personal options trading knowledge base — primarily US-equity, with
+  cross-market support via kimi-datasource (Yahoo Finance) for Korea,
+  Japan, UK, Canada, India, Brazil, and Europe. Use for trade analysis,
   strategy recommendations, earnings plays, post-mortems, or ticker mentions
   in a trading context (e.g., "analyze APP", "sell put on TSLA", "structure
   for NVDA earnings"). Triggers on multi-leg options (Jade Lizard, bull put
@@ -11,7 +13,7 @@ description: >
   options play. Concrete strikes, IV-aware structures, probability-weighted
   scenarios from 24 pitfalls, a gamma framework, and case studies (INTC,
   Mag-7, APP, NOK, TSEM, CBRS, SNOW). Market data via TradingView + Funda
-  AI. Chinese response, English technical terms. **Check 3 axes before any
+  AI (primary) or kimi-datasource (fallback). **Check 3 axes before any
   structure**: vega sign matches IVR (pitfall 19); delta matches thesis;
   asymmetry — bull-conviction ≥ 4 (pitfall 24) forbids Jade Lizard / IC /
   Calendar regardless of IV. Pitfall 7 fixes vega sign, not structure.
@@ -33,11 +35,18 @@ Active US-equity options trader's personal knowledge base. Concrete strikes, pro
 
 - Trades multi-leg options on mega-cap US equities (earnings plays, event-driven)
 - Fluent in Greeks, IV term structure, IV crush dynamics
-- **Writes in Chinese — respond in Chinese.** Technical terms (delta, IV crush, diagonal, etc.) stay in English.
+- **Language preference**: respond in the user's language. Technical terms (delta, IV crush, diagonal, etc.) stay in English.
 
 ## Data Access
 
-**MUST use Funda AI API for all market data** — quotes, options chains, IV/Greeks, GEX, flow, fundamentals, sentiment, congressional trades, earnings transcripts. Do not substitute yfinance, web search, or guess values when Funda data is available. Use the `funda-data` skill (or `finance-data-providers:funda-data`) to fetch.
+**Primary source: Funda AI API** — quotes, options chains, IV/Greeks, GEX, flow, fundamentals, sentiment, congressional trades, earnings transcripts. Use the `funda-data` skill (or `finance-data-providers:funda-data`) to fetch. Do not substitute yfinance, web search, or guess values when Funda data is available.
+
+**Fallback source: kimi-datasource** — when Funda is unavailable or the ticker is outside Funda coverage (non-US/HK/CN markets), use the `kimi-datasource` skill via `yahoo_finance` for price history, stock info, and fundamentals. Options-specific data (chains, Greeks, IV by strike, flow) is **unavailable** in this mode — proxy via realized-vol + BSM estimator. See `references/kimi-datasource-bridge.md` for the full protocol, ticker formats, and confidence-flag system.
+
+**Data Confidence Flags:**
+- 🟢 **Funda live** — full options chain, flow, Greeks. Standard thresholds apply.
+- 🟡 **kimi-datasource estimated** — price history + fundamentals only. IV proxied from realized volatility; options flow proxied from volume anomaly + sector co-rally. Adjusted thresholds (extrinsic < 12–15% instead of < 10%). Always flag estimated data.
+- 🔴 **Insufficient data** — reject the setup or defer analysis.
 
 **Credentials live in the root repo `.env`, not the worktree.** When running inside a worktree (path matches `.claude/worktrees/*`), the worktree itself has no `.env` — resolve to the main repo's `.env` by stripping the `.claude/worktrees/<name>` suffix from the current working directory.
 
@@ -89,12 +98,17 @@ This skill uses lazy loading — read individual reference files only when relev
 | `references/pitfalls/NN-*.md` | Individual pitfall rules — load only when a relevant trade situation arises. |
 | `references/ticker/README.md` | Index of trade case studies (INTC, Mag-7, APP, NOK, TSEM, CBRS, SNOW). |
 | `references/ticker/<name>.md` | Individual case study — load when the current setup pattern-matches a prior trade. |
+| `references/kimi-datasource-bridge.md` | Operating manual for running the skill without Funda AI API. Data capability matrix, ticker formats, IV proxy methodology, options flow proxy, and 🟡 estimated-data workflow. **Load when Funda is unavailable or the ticker is non-US.** |
+| `references/tools/realized_vol.py` | Realized volatility + IV Rank proxy calculator. Bootstrap `references/kimi-datasource-bridge.md` step 1. CLI tool; auto-detects currency from Yahoo CSV. |
+| `references/tools/bsm_quick.py` | Black-Scholes-Merton option pricer. Bootstrap `references/kimi-datasource-bridge.md` step 3. CLI tool; supports currency formatting + adaptive gamma notation. |
 
 ## When to Read Which File
 
 | Situation | Files to load |
 |-----------|---------------|
 | New trade analysis request | `references/strategies.md`; `references/pitfalls/19` (vega-axis), **`references/pitfalls/24` (asymmetry-axis check)** |
+| Funda API unavailable / non-US ticker | `references/kimi-datasource-bridge.md` (mandatory first read); `references/tools/realized_vol.py` + `references/tools/bsm_quick.py` |
+| Need to proxy IV from price history | `references/kimi-datasource-bridge.md` section 3; `references/tools/realized_vol.py` |
 | Reading tape / explaining a move / vacuum-zone identification | `references/price-action-framework.md` |
 | "Why did the stock react this way to news?" | `references/price-action-framework.md`; `references/pitfalls/08` |
 | Retail saturation / KOL-amplified setup / social-media-saturation check | `references/price-action-framework.md` (float composition); `references/pitfalls/20`, `21`; `references/ticker/nok-2026-04.md` |
