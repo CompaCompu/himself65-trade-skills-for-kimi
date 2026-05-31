@@ -116,11 +116,39 @@ Replacing 100 shares with deep ITM LEAPS + cash. **Capital efficiency play, not 
 - High IVR period (you're paying peak vega)
 - Stock with rich dividend yield (e.g., banks, REITs)
 
+### When Options Chain Data Is Unavailable (kimi-datasource Mode)
+
+When live options chains are inaccessible, the LEAPS stock-replacement conditions must be validated via estimation rather than market quotes.
+
+**Procedure**:
+
+1. **Pull price history** (`stock_finance_data_get_price` or `yahoo_finance_get_historical_stock_prices`)
+2. **Compute realized vol** via `tools/realized_vol.py`
+3. **Estimate IV proxy**: `realized_vol_60d + 5pp`
+4. **Run BSM estimator** (`tools/bsm_quick.py`) for candidate strikes
+5. **Find the extrinsic < 10% boundary** — the deepest ITM strike where BSM extrinsic % < 10%
+
+**Adjusted thresholds for estimated data**:
+
+| Certainty | Extrinsic Threshold | Action |
+|---|---|---|
+| High (live chain) | < 10% | Standard LEAPS replacement |
+| Medium (BSM estimate, IV < 60%) | < 12% | Acceptable; attach 🟡 flag |
+| Low (BSM estimate, IV > 90%) | < 15% | Marginal; deep ITM only; attach 🟡 flag |
+
+**Critical finding from testing**: At extreme IV (>90%), the LEAPS boundary shifts dramatically deeper ITM. On SK Hynix (97.8% IV), extrinsic fell below 10% only at a strike **48% in-the-money** — a level that would be unnecessary at 40% IV. Do not force a stock-replacement label when the vol regime makes it structurally impossible.
+
+**When BSM says no strike satisfies extrinsic < 10%**:
+- The setup is **invalid for stock replacement** in the current IV regime
+- Switch to: (a) wait for IV compression, or (b) treat as leveraged speculation with smaller size
+- Never "relax the threshold to 25%" — that is no longer replacement, it is speculation
+
 ### Cross-References
 
 - Pitfall 11 — LEAPS through earnings = vega tax
 - Pitfall 16 — drift vs vol confusion (the wrong reason to like LEAPS)
 - Pitfall 18 — roll frequency vs IV thesis (don't over-roll the replacement position)
+- `references/kimi-datasource-bridge.md` — full proxy methodology for 🟡 mode
 
 ---
 

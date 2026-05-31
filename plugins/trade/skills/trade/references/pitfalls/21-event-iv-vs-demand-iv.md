@@ -28,13 +28,25 @@ Concrete failure (NOK 2026-05-11): NOK at IV Rank 66, IV 74%. I recommended "rol
    - 14-45 days to earnings = mixed (event premium is building but not dominant)
    - >45 days to earnings AND IVR elevated = **demand-driven default** — investigate flow before assuming crush
 
-2. **Always pull net premium data before making a vega recommendation**:
+2. **Check flow data before making a vega recommendation** — use the best available source:
+
+   **IF Funda / live options flow is available:**
    ```
    Funda API: /v1/options/stock?ticker=X&type=net-prem-ticks
    ```
    - Net call premium >+$5M/day on 3+ consecutive days = sustained institutional accumulation
    - Net premium turning negative or sharply bid-side = event-style top forming
    - Check for "block clusters" — a single $400K+ trade or 5+ trades in one strike inside 30 minutes = real institution at work
+
+   **ELIF only kimi-datasource is available (🟡 mode):**
+   - Proxy demand-IV from **volume anomaly**: `current_volume / 30d_avg > 2.0` = accumulation signal
+   - Proxy from **sector co-rally**: Use `get_related_stock` with thematic keyword; 3+ peers rallying >+20% in past month = sustained narrative bid
+   - Proxy from **price acceleration**: 20-day return > +30% with volume expansion = demand-driven, not event-driven
+   - **State explicitly**: "Flow check proxied from price/volume/sector. Confidence: 🟡"
+
+   **ELSE (no data at all):**
+   - Default to **catalyst clock only**: >45 days to earnings + elevated IVR = assume mixed until proven otherwise
+   - **State explicitly**: "Flow data unavailable. IV crush prediction made with ⚠️ low confidence."
 
 3. **Catalysts that drive sustained demand-IV (not event-IV)**:
    - Thematic re-rate (AI optical, weight-loss drugs, crypto cycle)

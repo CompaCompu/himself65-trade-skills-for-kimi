@@ -35,6 +35,7 @@ The Jade Lizard captured ~1% of what an uncapped bullish structure would have. *
 
 Tally these factors (each = 1 conviction point):
 
+**Core checks** (work in any data regime):
 - [ ] 3+ independent channel checks aligned bullish
 - [ ] Sector / thematic narrative actively re-rating
 - [ ] Stock down >20% from recent high going into event (de-risked setup)
@@ -44,7 +45,16 @@ Tally these factors (each = 1 conviction point):
 - [ ] Short interest >10% (squeeze potential)
 - [ ] Implied move materially below recent average realized move
 
+**Data-driven bonus checks** (available via `kimi-datasource` — add +0.5 each, round down):
+- [ ] Narrative segment revenue accelerating QoQ (`get_stock_business_segmentation`)
+- [ ] Gross margin expanding QoQ (`get_financial_statements` income statement)
+- [ ] Operating cash flow > net income (`get_financial_statements` cash flow vs. income)
+- [ ] Top 5 institutional holders increasing positions (`get_holder_info`)
+- [ ] 3+ sector peers also rallying >+15% in past month (`get_related_stock` thematic screen)
+
 **Conviction count ≥ 4 → "high-conviction bull" → asymmetry rule activates**
+
+*Note on half-points: The data-driven checks are worth 0.5 each because they are proxied from fundamentals, not direct market structure signals. Two bonus checks = 1 full conviction point. Maximum bonus contribution: +2 points (4 checks). This prevents a fundamentals-only analysis from triggering the asymmetry rule without directional market confirmation.*
 
 ### 2. Banned structures in high-conviction bull (conviction ≥4)
 
